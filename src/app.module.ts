@@ -15,7 +15,7 @@ import { Customer } from './model/customer.entity';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Customer],
+      entities: ['./model/*.entity.ts'],
       synchronize: true,
     }),
     TypeOrmModule.forFeature([Customer]),
