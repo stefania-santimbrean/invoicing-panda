@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Project } from './project.entity';
+import { Invoice } from './invoice.entity';
 
 @Entity()
 export class Customer {
@@ -7,4 +9,10 @@ export class Customer {
 
   @Column()
   name: string;
+
+  @OneToMany(() => Project, (project) => project.customer)
+  projects: Project[];
+
+  @OneToMany(() => Invoice, (invoice) => invoice.customer)
+  invoices: Invoice[];
 }

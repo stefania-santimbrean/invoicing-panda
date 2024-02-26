@@ -4,6 +4,8 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { Customer } from './model/customer.entity';
+import { Invoice } from './model/invoice.entity';
+import { Project } from './model/project.entity';
 
 @Module({
   imports: [
@@ -15,7 +17,8 @@ import { Customer } from './model/customer.entity';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Customer],
+      entities: [Customer, Invoice, Project],
+      autoLoadEntities: true,
       synchronize: true,
     }),
     TypeOrmModule.forFeature([Customer]),
