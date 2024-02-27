@@ -3,9 +3,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { Customer } from './model/customer.entity';
-import { Invoice } from './model/invoice.entity';
-import { Project } from './model/project.entity';
+import { Customer } from './entities/customer.entity';
+import { Invoice } from './entities/invoice.entity';
+import { Project } from './entities/project.entity';
 
 @Module({
   imports: [
