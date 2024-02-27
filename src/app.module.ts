@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { Customer } from './entities/customer.entity';
 import { Invoice } from './entities/invoice.entity';
 import { Project } from './entities/project.entity';
+import { InvoicingModule } from './modules/invoicing.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { Project } from './entities/project.entity';
       synchronize: true,
     }),
     TypeOrmModule.forFeature([Customer]),
+    InvoicingModule,
   ],
   controllers: [AppController],
   providers: [AppService],

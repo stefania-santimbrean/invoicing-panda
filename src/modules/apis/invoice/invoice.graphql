@@ -1,0 +1,27 @@
+type Invoice {
+  nr: Int!
+  isStorno: Boolean
+  currency: String
+  amount: Int
+}
+
+type Query {
+  invoices: [Invoice]
+  invoice(nr: Int): Invoice!
+}
+
+type Mutation {
+  create(
+    isStorno: Boolean
+    currency: Int
+    amount: Int
+    customerId: Int
+  ): Invoice
+  update(
+    nr: Int
+    isStorno: Boolean
+    currency: Int
+    amount: Int
+    customerId: Int
+  ): Invoice
+}
