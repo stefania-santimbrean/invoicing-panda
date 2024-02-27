@@ -1,5 +1,12 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Customer } from './customer.entity';
+import { Project } from './project.entity';
 
 @Entity()
 export class Invoice {
@@ -15,6 +22,9 @@ export class Invoice {
   @Column()
   amount: string;
 
-  @ManyToOne(() => Customer, (customer) => customer.invoices)
+  @ManyToOne(() => Customer, (customer) => customer.invoices, { eager: true })
   customer: Customer;
+
+  @ManyToMany(() => Project, (project) => project.invoices, { eager: true })
+  projects: Project[];
 }
