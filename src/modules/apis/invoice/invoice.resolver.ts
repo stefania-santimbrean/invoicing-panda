@@ -11,8 +11,8 @@ export class InvoiceResolver {
   }
 
   @Query()
-  async invoice(@Args('id') id: string) {
-    return await this.invoiceService.getInvoice(id);
+  async invoice(@Args('nr') nr: string) {
+    return await this.invoiceService.getInvoice(nr);
   }
 
   @Mutation()
