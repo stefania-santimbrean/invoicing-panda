@@ -85,3 +85,4 @@ Nest is [MIT licensed](LICENSE).
 `yarn typeorm migration:generate -d ./db/typeorm.config.ts ./db/migrations/init`
 `yarn typeorm migration:run -d ./db/typeorm.config.ts`
 `yarn typeorm migration:create ./db/migrations/data`
+`yarn typeorm migration:revert -d ./db/typeorm.config.ts`
