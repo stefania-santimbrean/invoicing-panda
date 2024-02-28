@@ -18,13 +18,13 @@ export class Data1709137454896 implements MigrationInterface {
     );
 
     await queryRunner.query(
-      `INSERT into "invoice" ("nr", "isStorno", "currency", "amount", "customerId") VALUES (1,false,'RON',100,2)`,
+      `INSERT into "invoice" ("nr", "isStorno", "currency", "amount", "customerId", "date") VALUES (1,false,'RON',100,2)`,
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`DELETE FROM "customer"`);
-    await queryRunner.query(`DELETE FROM "project"`);
     await queryRunner.query(`DELETE FROM "invoice"`);
+    await queryRunner.query(`DELETE FROM "project"`);
+    await queryRunner.query(`DELETE FROM "customer"`);
   }
 }
