@@ -11,5 +11,5 @@ export default registerAs('database', () => ({
   synchronize: process.env.NODE_ENV === 'development',
   logging: process.env.NODE_ENV === 'development',
   migrations: [`${__dirname}/../../db/migrations/*{.ts, .js}`],
-  migrationTableName: 'migrations',
+  migrationsTableName: 'migrations',
 }));
