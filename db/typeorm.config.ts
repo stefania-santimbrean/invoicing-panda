@@ -13,8 +13,8 @@ export default new DataSource({
   password: configService.get('DB_PASSWORD'),
   database: configService.get('DB_NAME'),
   entities: [`${__dirname}/../../*.entity{.ts,.js}`],
-  synchronize: process.env.NODE_ENV === 'development',
-  logging: process.env.NODE_ENV === 'development',
+  synchronize: configService.get('nodenv') === 'development',
+  logging: configService.get('nodenv') === 'development',
   migrations: [`${__dirname}/migrations/*{.ts, .js}`],
   migrationsTableName: 'migrations',
 });
