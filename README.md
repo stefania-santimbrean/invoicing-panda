@@ -75,9 +75,13 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 Nest is [MIT licensed](LICENSE).
 
 ## Setup
+
 `yarn`
 `docker compose -f ./docker/postgresql.yml up -d`
 `yarn start:dev`
 
 ## Migrations commands
+
 `yarn typeorm migration:generate -d ./db/typeorm.config.ts ./db/migrations/init`
+`yarn typeorm migration:run -d ./db/typeorm.config.ts`
+`yarn typeorm migration:create ./db/migrations/data`
