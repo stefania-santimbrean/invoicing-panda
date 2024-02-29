@@ -78,6 +78,7 @@ Nest is [MIT licensed](LICENSE).
 
 `yarn`
 `docker compose -f ./docker/postgresql.yml up -d`
+`docker compose -f ./docker/postgresql.yml down`
 `yarn start:dev`
 
 ## Migrations commands
