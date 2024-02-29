@@ -13,6 +13,7 @@ export class Invoice {
     isStorno?: Nullable<boolean>;
     currency?: Nullable<string>;
     amount?: Nullable<number>;
+    date?: Nullable<Date>;
 }
 
 export abstract class IQuery {

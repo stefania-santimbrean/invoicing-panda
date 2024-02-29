@@ -1,8 +1,11 @@
+scalar Date
+
 type Invoice {
   nr: Int!
   isStorno: Boolean
   currency: String
   amount: Int
+  date: Date
 }
 
 type Query {

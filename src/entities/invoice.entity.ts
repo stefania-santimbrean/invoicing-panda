@@ -1,16 +1,10 @@
-import {
-  Column,
-  Entity,
-  ManyToMany,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToMany, ManyToOne, PrimaryColumn } from 'typeorm';
 import { Customer } from './customer.entity';
 import { Project } from './project.entity';
 
 @Entity()
 export class Invoice {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn({ unique: true, generatedIdentity: 'BY DEFAULT' })
   nr: number;
 
   @Column()
@@ -21,6 +15,9 @@ export class Invoice {
 
   @Column()
   amount: string;
+
+  @Column()
+  date: Date;
 
   @ManyToOne(() => Customer, (customer) => customer.invoices, { eager: true })
   customer: Customer;
