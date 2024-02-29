@@ -22,6 +22,9 @@ export class Invoice {
   @Column()
   amount: string;
 
+  @Column()
+  date: Date;
+
   @ManyToOne(() => Customer, (customer) => customer.invoices, { eager: true })
   customer: Customer;
 

@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { InvoiceModule } from './apis/invoice/invoice.module';
+import { DateScalar } from 'src/shared/scalars/date-scalar.class';
 
 @Module({
   imports: [
@@ -18,6 +19,6 @@ import { InvoiceModule } from './apis/invoice/invoice.module';
     InvoiceModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [DateScalar],
 })
 export class InvoicingModule {}
