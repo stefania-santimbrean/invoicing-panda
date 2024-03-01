@@ -14,7 +14,7 @@ export class Invoice {
   currency: string;
 
   @Column()
-  amount: string;
+  amount: number;
 
   @Column()
   date: Date;
