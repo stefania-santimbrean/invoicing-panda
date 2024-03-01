@@ -6,6 +6,9 @@ import { AppService } from './app.service';
 import { Customer } from './entities/customer.entity';
 import { InvoicingModule } from './modules/invoicing.module';
 import { AppConfig, DbConfig } from './config';
+import { SeedService } from './shared/services/seed.service';
+import { InvoiceService } from './modules/apis/invoice/invoice.service';
+import { Invoice } from './entities/invoice.entity';
 
 @Module({
   imports: [
@@ -21,10 +24,10 @@ import { AppConfig, DbConfig } from './config';
       }),
       inject: [ConfigService],
     }),
-    TypeOrmModule.forFeature([Customer]),
+    TypeOrmModule.forFeature([Customer, Invoice]),
     InvoicingModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, SeedService, InvoiceService],
 })
 export class AppModule {}
