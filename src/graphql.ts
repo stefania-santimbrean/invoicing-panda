@@ -8,12 +8,19 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export class Customer {
+    id: number;
+    name?: Nullable<string>;
+}
+
 export class Invoice {
     nr: number;
     isStorno?: Nullable<boolean>;
     currency?: Nullable<string>;
     amount?: Nullable<number>;
     date?: Nullable<Date>;
+    customer?: Nullable<Customer>;
+    projects?: Nullable<Nullable<Project>[]>;
 }
 
 export abstract class IQuery {
@@ -26,6 +33,11 @@ export abstract class IMutation {
     abstract create(isStorno?: Nullable<boolean>, currency?: Nullable<number>, amount?: Nullable<number>, customerId?: Nullable<number>): Nullable<Invoice> | Promise<Nullable<Invoice>>;
 
     abstract update(nr?: Nullable<number>, isStorno?: Nullable<boolean>, currency?: Nullable<number>, amount?: Nullable<number>, customerId?: Nullable<number>): Nullable<Invoice> | Promise<Nullable<Invoice>>;
+}
+
+export class Project {
+    id: number;
+    name?: Nullable<string>;
 }
 
 type Nullable<T> = T | null;

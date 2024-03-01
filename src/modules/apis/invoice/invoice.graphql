@@ -6,6 +6,8 @@ type Invoice {
   currency: String
   amount: Int
   date: Date
+  customer: Customer
+  projects: [Project]
 }
 
 type Query {
