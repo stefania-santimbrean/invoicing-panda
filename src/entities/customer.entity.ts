@@ -10,9 +10,15 @@ export class Customer {
   @Column()
   name: string;
 
-  @OneToMany(() => Project, (project) => project.customer)
+  @OneToMany(() => Project, (project) => project.customer, {
+    cascade: ['update'],
+    onDelete: 'CASCADE',
+  })
   projects: Project[];
 
-  @OneToMany(() => Invoice, (invoice) => invoice.customer)
+  @OneToMany(() => Invoice, (invoice) => invoice.customer, {
+    cascade: ['update'],
+    onDelete: 'CASCADE',
+  })
   invoices: Invoice[];
 }
