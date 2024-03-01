@@ -11,13 +11,13 @@ export class Customer {
   name: string;
 
   @OneToMany(() => Project, (project) => project.customer, {
-    cascade: ['update'],
+    cascade: true,
     onDelete: 'CASCADE',
   })
   projects: Project[];
 
   @OneToMany(() => Invoice, (invoice) => invoice.customer, {
-    cascade: ['update'],
+    cascade: true,
     onDelete: 'CASCADE',
   })
   invoices: Invoice[];

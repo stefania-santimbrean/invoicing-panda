@@ -9,6 +9,8 @@ import { AppConfig, DbConfig } from './config';
 import { SeedService } from './shared/services/seed.service';
 import { InvoiceService } from './modules/apis/invoice/invoice.service';
 import { Invoice } from './entities/invoice.entity';
+import { CustomerService } from './modules/apis/customer/customer.service';
+import { Project } from 'ts-morph';
 
 @Module({
   imports: [
@@ -24,10 +26,10 @@ import { Invoice } from './entities/invoice.entity';
       }),
       inject: [ConfigService],
     }),
-    TypeOrmModule.forFeature([Customer, Invoice]),
+    TypeOrmModule.forFeature([Customer, Invoice, Project]),
     InvoicingModule,
   ],
   controllers: [AppController],
-  providers: [AppService, SeedService, InvoiceService],
+  providers: [AppService, SeedService, InvoiceService, CustomerService],
 })
 export class AppModule {}
