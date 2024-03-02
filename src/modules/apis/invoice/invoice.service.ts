@@ -20,12 +20,38 @@ export class InvoiceService {
     const value = await this.invoiceRepository
       .createQueryBuilder('invoice')
       .where('invoice.nr = :nr', { nr: nr })
-      .getOne();
+      .getOne(); // why is getOne not bringing customerId ??
     if (!value) {
       throw new Error(invoice_not_found_error_message(nr));
       // check how to improve graphql error response and code
     }
     return value;
+  }
+
+  async create(
+    invoice: Partial<Invoice>,
+    customer: number,
+    projects: number[],
+  ) {
+    const createdInvoice = await this.invoiceRepository
+      .createQueryBuilder()
+      .insert()
+      .values({
+        ...invoice,
+        customer: {
+          id: customer,
+        },
+      })
+      .returning('*')
+      .execute();
+
+    await this.invoiceRepository
+      .createQueryBuilder()
+      .relation(Invoice, 'projects')
+      .of(createdInvoice.raw[0].nr)
+      .add(projects);
+
+    return createdInvoice.raw[0];
   }
 
   async seed() {

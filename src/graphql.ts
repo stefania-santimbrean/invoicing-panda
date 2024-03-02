@@ -19,7 +19,7 @@ export class Invoice {
     currency?: Nullable<string>;
     amount?: Nullable<number>;
     date?: Nullable<Date>;
-    customer?: Nullable<Customer>;
+    customer: Customer;
     projects?: Nullable<Nullable<Project>[]>;
 }
 
@@ -30,9 +30,9 @@ export abstract class IQuery {
 }
 
 export abstract class IMutation {
-    abstract create(isStorno?: Nullable<boolean>, currency?: Nullable<number>, amount?: Nullable<number>, customerId?: Nullable<number>): Nullable<Invoice> | Promise<Nullable<Invoice>>;
+    abstract create(isStorno?: Nullable<boolean>, currency?: Nullable<string>, date?: Nullable<Date>, amount?: Nullable<number>, customer?: Nullable<number>, projects?: Nullable<Nullable<number>[]>): Nullable<Invoice> | Promise<Nullable<Invoice>>;
 
-    abstract update(nr?: Nullable<number>, isStorno?: Nullable<boolean>, currency?: Nullable<number>, amount?: Nullable<number>, customerId?: Nullable<number>): Nullable<Invoice> | Promise<Nullable<Invoice>>;
+    abstract update(nr?: Nullable<number>, isStorno?: Nullable<boolean>, currency?: Nullable<string>, date?: Nullable<Date>, amount?: Nullable<number>, customer?: Nullable<number>, projects?: Nullable<number>): Nullable<Invoice> | Promise<Nullable<Invoice>>;
 }
 
 export class Project {

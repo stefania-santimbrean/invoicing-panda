@@ -6,7 +6,7 @@ type Invoice {
   currency: String
   amount: Int
   date: Date
-  customer: Customer
+  customer: Customer!
   projects: [Project]
 }
 
@@ -18,15 +18,20 @@ type Query {
 type Mutation {
   create(
     isStorno: Boolean
-    currency: Int
+    currency: String
+    date: Date
     amount: Int
-    customerId: Int
+    customer: Int
+    projects: [Int]
   ): Invoice
+
   update(
     nr: Int
     isStorno: Boolean
-    currency: Int
+    currency: String
+    date: Date
     amount: Int
-    customerId: Int
+    customer: Int
+    projects: Int
   ): Invoice
 }

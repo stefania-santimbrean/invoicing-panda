@@ -19,9 +19,15 @@ export class Invoice {
   @Column()
   date: Date;
 
-  @ManyToOne(() => Customer, (customer) => customer.invoices, { eager: true })
+  @ManyToOne(() => Customer, (customer) => customer.invoices, {
+    eager: true,
+    nullable: false,
+  })
   customer: Customer;
 
-  @ManyToMany(() => Project, (project) => project.invoices, { eager: true })
+  @ManyToMany(() => Project, (project) => project.invoices, {
+    eager: true,
+    nullable: false,
+  })
   projects: Project[];
 }
