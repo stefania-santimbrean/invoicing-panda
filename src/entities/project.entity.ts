@@ -24,6 +24,6 @@ export class Project {
     cascade: ['update'],
     onDelete: 'CASCADE',
   })
-  @JoinTable()
+  @JoinTable({ name: 'project_invoices' })
   invoices: Invoice[];
 }
