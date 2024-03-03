@@ -7,7 +7,10 @@ import { AppModule } from '../../../app.module';
 import { invoice_not_found_error_message } from './invoice.service';
 import { INVOICES_DATA } from '../../../../db/mock-data/seed-data';
 import { CustomerService } from '../customer/customer.service';
-import { invoice_for_storno_not_found } from './commands/create-storno.handler';
+import {
+  invoice_for_storno_exists,
+  invoice_for_storno_not_found,
+} from './commands/create-storno.handler';
 const FIRST_INVOICE_NR = 1337;
 
 describe('Invoice Integration Tests', () => {
@@ -233,6 +236,24 @@ describe('Invoice Integration Tests', () => {
 
     expect(response.body.errors[0].message).toEqual(
       invoice_for_storno_not_found(nr),
+    );
+  });
+
+  it(`create storno invoice when one already exists`, async () => {
+    const mutation = `
+      mutation {
+        createStorno (nr: ${FIRST_INVOICE_NR})
+      }
+    `;
+
+    const response = await request(app.getHttpServer())
+      .post('/graphql')
+      .set('content-type', 'application/json')
+      .send({ query: mutation })
+      .expect(200);
+
+    expect(response.body.errors[0].message).toEqual(
+      invoice_for_storno_exists(FIRST_INVOICE_NR),
     );
   });
 });
