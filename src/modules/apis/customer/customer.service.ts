@@ -17,6 +17,10 @@ export class CustomerService {
     private readonly customerRepository: Repository<Customer>,
   ) {}
 
+  async getCustomers() {
+    return await this.customerRepository.find({});
+  }
+
   async seed() {
     const project1 = new Project();
     project1.name = PROJECT_DATA[0].name;

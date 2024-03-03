@@ -11,6 +11,7 @@ export class Customer {
   name: string;
 
   @OneToMany(() => Project, (project) => project.customer, {
+    eager: true,
     cascade: true,
     onDelete: 'CASCADE',
   })
