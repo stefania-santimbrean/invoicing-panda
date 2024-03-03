@@ -7,18 +7,24 @@ API that allows for invoices to be managed in a backend system
 ## Preprequisites (installed once)
 
 **For Mac/Linux:**
-`brew install docker`
+```
+brew install docker
+```
 
 Install Docker Desktop: https://docs.docker.com/desktop/install/mac-install/
 
-`brew install nvm`
+```
+brew install nvm
+```
 
 ```
 nvm install 20.9.0
 nvm use 20.9.0 && nvm alias default 20.9.0`
 ```
 
-`npm i -g yarn`
+```
+npm i -g yarn
+```
 
 Some database tool e.g. DBeaver, TablePlus etc. or some Postgres cli e.g. `brew install pgcli`
 
@@ -59,12 +65,15 @@ docker compose -f ./docker/postgresql.yml down
 ## Migrations commands for devs
 
 Create or generate migration:
+
 `yarn typeorm migration:generate -d ./db/typeorm.config.ts ./db/migrations/init`
 
 `yarn typeorm migration:create ./db/migrations/data`
 
 Run to test it:
+
 `yarn typeorm migration:run -d ./db/typeorm.config.ts`
 
 Revert if needed:
+
 `yarn typeorm migration:revert -d ./db/typeorm.config.ts`
