@@ -4,6 +4,7 @@ import { Invoice } from '../../../../entities/invoice.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { InvoiceModel } from '../../../../models/invoice.model';
+import { Status, StatusValue } from '../../../../shared/types/shared.types';
 
 @CommandHandler(CreateStornoCommand)
 export class CreateStornoHandler
@@ -14,10 +15,16 @@ export class CreateStornoHandler
     private readonly invoiceRepository: Repository<Invoice>,
     private readonly publisher: EventPublisher,
   ) {}
-  async execute(command: CreateStornoCommand): Promise<void> {
+  async execute(command: CreateStornoCommand): Promise<Status> {
     const inv = await this.invoiceRepository.findOneBy({
       nr: command.invoiceNr,
     });
+    if (!inv) {
+      return {
+        status: StatusValue.failed,
+        message: `Cannot create storno for unexisting invoice with nr ${command.invoiceNr}`,
+      };
+    }
     const storno = await this.invoiceRepository
       .createQueryBuilder()
       .insert()
@@ -45,5 +52,8 @@ export class CreateStornoHandler
       new InvoiceModel(storno.raw[0]),
     );
     // send storno invoice in rabbitmq to be read by some accounting systems like SAP stuff
+    return {
+      status: StatusValue.success,
+    };
   }
 }
