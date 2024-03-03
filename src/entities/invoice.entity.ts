@@ -10,7 +10,7 @@ export class Invoice {
   @Column()
   isStorno: boolean;
 
-  @Column()
+  @Column({ nullable: true })
   stornoRef: number; // id of existing storned invoice
 
   @Column()
@@ -22,18 +22,16 @@ export class Invoice {
   @Column()
   date: Date;
 
-  @Column()
+  @Column({ default: false }) // usually when an invoice is created it is not yet paid
   paid: boolean;
 
   @ManyToOne(() => Customer, (customer) => customer.invoices, {
     eager: true,
-    nullable: false,
   })
   customer: Customer;
 
   @ManyToMany(() => Project, (project) => project.invoices, {
     eager: true,
-    nullable: false,
   })
   projects: Project[];
 }
