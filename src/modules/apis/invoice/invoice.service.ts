@@ -17,10 +17,11 @@ export class InvoiceService {
   }
 
   async getInvoice(nr) {
-    const value = await this.invoiceRepository
-      .createQueryBuilder('invoice')
-      .where('invoice.nr = :nr', { nr: nr })
-      .getOne(); // why is getOne not bringing customerId ??
+    const value = await this.invoiceRepository.findOne({
+      where: {
+        nr,
+      },
+    });
     if (!value) {
       throw new Error(invoice_not_found_error_message(nr));
       // check how to improve graphql error response and code
