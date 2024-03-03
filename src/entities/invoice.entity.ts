@@ -11,6 +11,9 @@ export class Invoice {
   isStorno: boolean;
 
   @Column()
+  stornoRef: number; // id of existing storned invoice
+
+  @Column()
   currency: string;
 
   @Column()
@@ -18,6 +21,9 @@ export class Invoice {
 
   @Column()
   date: Date;
+
+  @Column()
+  paid: boolean;
 
   @ManyToOne(() => Customer, (customer) => customer.invoices, {
     eager: true,
