@@ -8,6 +8,7 @@ import { MarkAsPaidHandler } from './commands/mark-as-paid.handler';
 import { MarkedAsPaidHandler } from './events/marked-as-paid.handler';
 import { CustomerService } from '../customer/customer.service';
 import { Customer } from '../../../entities/customer.entity';
+import { CreateStornoHandler } from './commands/create-storno.handler';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Invoice, Customer]), CqrsModule],
@@ -17,6 +18,7 @@ import { Customer } from '../../../entities/customer.entity';
     InvoiceResolver,
     MarkAsPaidHandler,
     MarkedAsPaidHandler,
+    CreateStornoHandler,
   ],
 })
 export class InvoiceModule {}
