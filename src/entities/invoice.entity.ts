@@ -7,7 +7,7 @@ export class Invoice {
   @PrimaryColumn({ unique: true, generatedIdentity: 'BY DEFAULT' })
   nr: number;
 
-  @Column()
+  @Column({ default: false })
   isStorno: boolean;
 
   @Column({ nullable: true })
