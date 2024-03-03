@@ -5,6 +5,9 @@ import { Repository } from 'typeorm';
 import { INVOICES_DATA } from '../../../../db/mock-data/seed-data';
 export const invoice_not_found_error_message = (nr) =>
   `No invoice was found with number ${nr}`; // ideally this would be coming from an i18n file
+
+// TODO: should refactor with cqrs queries
+
 @Injectable()
 export class InvoiceService {
   constructor(

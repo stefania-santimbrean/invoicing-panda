@@ -33,6 +33,8 @@ export abstract class IMutation {
     abstract create(isStorno?: Nullable<boolean>, currency?: Nullable<string>, date?: Nullable<Date>, amount?: Nullable<number>, customer?: Nullable<number>, projects?: Nullable<Nullable<number>[]>): Nullable<Invoice> | Promise<Nullable<Invoice>>;
 
     abstract update(nr?: Nullable<number>, isStorno?: Nullable<boolean>, currency?: Nullable<string>, date?: Nullable<Date>, amount?: Nullable<number>, customer?: Nullable<number>, projects?: Nullable<number>): Nullable<Invoice> | Promise<Nullable<Invoice>>;
+
+    abstract markAsPaid(nr?: Nullable<number>): Nullable<boolean> | Promise<Nullable<boolean>>;
 }
 
 export class Project {

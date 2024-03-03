@@ -1,9 +1,14 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { InvoiceService } from './invoice.service';
+import { CommandBus } from '@nestjs/cqrs';
+import { MarkAsPaidCommand } from './commands/mark-as-paid.command';
 
 @Resolver('Invoice')
 export class InvoiceResolver {
-  constructor(private readonly invoiceService: InvoiceService) {}
+  constructor(
+    private readonly invoiceService: InvoiceService,
+    private readonly commandBus: CommandBus,
+  ) {}
 
   @Query()
   async invoices() {
@@ -34,5 +39,11 @@ export class InvoiceResolver {
       customer,
       projects,
     );
+  }
+
+  @Mutation()
+  async markAsPaid(@Args('nr') nr: number) {
+    this.commandBus.execute(new MarkAsPaidCommand(nr));
+    return true;
   }
 }
