@@ -1,19 +1,11 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import { MarkedAsPaidEvent } from '../modules/apis/invoice/events/marked-as-paid.event';
+import { Invoice } from '../entities/invoice.entity';
 
 export class InvoiceModel extends AggregateRoot {
-  constructor(
-    nr: number,
-    isStorno: boolean,
-    stornoRef: number,
-    currency: string,
-    amount: number,
-    date: Date,
-    paid: boolean,
-    customer: number,
-    projects: number[],
-  ) {
+  constructor(invoice: Invoice) {
     super();
+    this.autoCommit = true;
   }
 
   sendEmail(nr: number) {

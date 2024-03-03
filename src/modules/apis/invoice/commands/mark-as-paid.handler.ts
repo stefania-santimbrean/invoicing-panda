@@ -3,6 +3,7 @@ import { MarkAsPaidCommand } from './mark-as-paid.command';
 import { Invoice } from '../../../../entities/invoice.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { InvoiceModel } from '../../../../models/invoice.model';
 
 @CommandHandler(MarkAsPaidCommand)
 export class MarkAsPaidHandler implements ICommandHandler<MarkAsPaidCommand> {
@@ -12,11 +13,16 @@ export class MarkAsPaidHandler implements ICommandHandler<MarkAsPaidCommand> {
     private readonly publisher: EventPublisher,
   ) {}
   async execute(command: MarkAsPaidCommand): Promise<void> {
-    const updated = await this.invoiceRepository.update(
-      { paid: true },
-      { nr: command.invoiceNr },
+    const updated = await this.invoiceRepository
+      .createQueryBuilder()
+      .update(Invoice)
+      .set({ paid: true })
+      .where({ nr: command.invoiceNr })
+      .returning('*')
+      .execute();
+    const invoice = this.publisher.mergeObjectContext(
+      new InvoiceModel(updated.raw[0]),
     );
-    const invoice = this.publisher.mergeObjectContext(updated.raw);
     invoice.sendEmail(command.invoiceNr);
   }
 }
