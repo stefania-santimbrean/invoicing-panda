@@ -16,9 +16,11 @@ export class Customer {
 export class Invoice {
     nr: number;
     isStorno?: Nullable<boolean>;
+    stornoRef?: Nullable<number>;
     currency?: Nullable<string>;
     amount?: Nullable<number>;
     date?: Nullable<Date>;
+    paid?: Nullable<boolean>;
     customer: Customer;
     projects?: Nullable<Nullable<Project>[]>;
 }
@@ -30,9 +32,13 @@ export abstract class IQuery {
 }
 
 export abstract class IMutation {
-    abstract create(isStorno?: Nullable<boolean>, currency?: Nullable<string>, date?: Nullable<Date>, amount?: Nullable<number>, customer?: Nullable<number>, projects?: Nullable<Nullable<number>[]>): Nullable<Invoice> | Promise<Nullable<Invoice>>;
+    abstract create(isStorno?: Nullable<boolean>, currency?: Nullable<string>, amount?: Nullable<number>, date?: Nullable<Date>, customer?: Nullable<number>, projects?: Nullable<Nullable<number>[]>): Nullable<Invoice> | Promise<Nullable<Invoice>>;
 
-    abstract update(nr?: Nullable<number>, isStorno?: Nullable<boolean>, currency?: Nullable<string>, date?: Nullable<Date>, amount?: Nullable<number>, customer?: Nullable<number>, projects?: Nullable<number>): Nullable<Invoice> | Promise<Nullable<Invoice>>;
+    abstract update(nr?: Nullable<number>, isStorno?: Nullable<boolean>, currency?: Nullable<string>, amount?: Nullable<number>, date?: Nullable<Date>, customer?: Nullable<number>, projects?: Nullable<number>): Nullable<Invoice> | Promise<Nullable<Invoice>>;
+
+    abstract markAsPaid(nr?: Nullable<number>, paid?: Nullable<boolean>): Nullable<boolean> | Promise<Nullable<boolean>>;
+
+    abstract createStorno(nr?: Nullable<number>): Nullable<boolean> | Promise<Nullable<boolean>>;
 }
 
 export class Project {

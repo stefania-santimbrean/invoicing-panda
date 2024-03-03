@@ -1,9 +1,16 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { InvoiceService } from './invoice.service';
+import { CommandBus } from '@nestjs/cqrs';
+import { MarkAsPaidCommand } from './commands/mark-as-paid.command';
+import { CreateStornoCommand } from './commands/create-storno.command';
+import { StatusValue } from '../../../shared/types/shared.types';
 
 @Resolver('Invoice')
 export class InvoiceResolver {
-  constructor(private readonly invoiceService: InvoiceService) {}
+  constructor(
+    private readonly invoiceService: InvoiceService,
+    private readonly commandBus: CommandBus,
+  ) {}
 
   @Query()
   async invoices() {
@@ -34,5 +41,23 @@ export class InvoiceResolver {
       customer,
       projects,
     );
+  }
+
+  @Mutation()
+  async markAsPaid(@Args('nr') nr: number, @Args('paid') paid: boolean = true) {
+    await this.commandBus.execute(new MarkAsPaidCommand(nr, paid));
+    return paid;
+  }
+
+  @Mutation()
+  async createStorno(@Args('nr') nr: number) {
+    const { status, message } = await this.commandBus.execute(
+      new CreateStornoCommand(nr),
+    );
+    if (status === StatusValue.success) {
+      return true;
+    } else {
+      throw new Error(message);
+    }
   }
 }

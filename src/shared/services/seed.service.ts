@@ -10,7 +10,7 @@ export class SeedService {
   ) {}
 
   public async seed() {
-    await this.invoiceService.seed();
     await this.customerService.seed();
+    await this.invoiceService.seed();
   }
 }

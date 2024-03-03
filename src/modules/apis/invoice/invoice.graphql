@@ -3,9 +3,11 @@ scalar Date
 type Invoice {
   nr: Int!
   isStorno: Boolean
+  stornoRef: Int
   currency: String
   amount: Int
   date: Date
+  paid: Boolean
   customer: Customer!
   projects: [Project]
 }
@@ -19,8 +21,8 @@ type Mutation {
   create(
     isStorno: Boolean
     currency: String
-    date: Date
     amount: Int
+    date: Date
     customer: Int
     projects: [Int]
   ): Invoice
@@ -29,9 +31,13 @@ type Mutation {
     nr: Int
     isStorno: Boolean
     currency: String
-    date: Date
     amount: Int
+    date: Date
     customer: Int
     projects: Int
   ): Invoice
+
+  markAsPaid(nr: Int, paid: Boolean): Boolean
+
+  createStorno(nr: Int): Boolean
 }
