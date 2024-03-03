@@ -20,7 +20,10 @@ export class Project {
   @ManyToOne(() => Customer, (customer) => customer.projects)
   customer: Customer;
 
-  @ManyToMany(() => Invoice, (invoice) => invoice.projects)
-  @JoinTable()
+  @ManyToMany(() => Invoice, (invoice) => invoice.projects, {
+    cascade: ['update'],
+    onDelete: 'CASCADE',
+  })
+  @JoinTable({ name: 'project_invoices' })
   invoices: Invoice[];
 }

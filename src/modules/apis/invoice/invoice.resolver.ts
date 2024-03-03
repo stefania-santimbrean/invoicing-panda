@@ -17,8 +17,22 @@ export class InvoiceResolver {
 
   @Mutation()
   async create(
-    @Args('isStorno') isStorno: Boolean,
-    @Args('currency') currency: Number,
-    @Args('amount') amount: Number,
-  ) {}
+    @Args('isStorno') isStorno: boolean,
+    @Args('currency') currency: string,
+    @Args('date') date: Date,
+    @Args('amount') amount: number,
+    @Args('customer') customer: number,
+    @Args('projects') projects: number[],
+  ) {
+    return this.invoiceService.create(
+      {
+        isStorno,
+        currency,
+        date,
+        amount,
+      },
+      customer,
+      projects,
+    );
+  }
 }

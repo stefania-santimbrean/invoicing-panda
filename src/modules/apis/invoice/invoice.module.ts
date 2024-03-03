@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Invoice } from 'src/entities/invoice.entity';
+import { Invoice } from '../../../entities/invoice.entity';
 import { InvoiceService } from './invoice.service';
 import { InvoiceResolver } from './invoice.resolver';
 

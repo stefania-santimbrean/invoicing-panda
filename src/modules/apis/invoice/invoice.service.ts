@@ -1,12 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Invoice } from 'src/entities/invoice.entity';
-
+import { Invoice } from '../../../entities/invoice.entity';
+import { Repository } from 'typeorm';
+import { INVOICES_DATA } from '../../../../db/mock-data/seed-data';
+export const invoice_not_found_error_message = (nr) =>
+  `No invoice was found with number ${nr}`; // ideally this would be coming from an i18n file
 @Injectable()
 export class InvoiceService {
   constructor(
     @InjectRepository(Invoice)
-    private readonly invoiceRepository,
+    private readonly invoiceRepository: Repository<Invoice>,
   ) {}
 
   async getInvoices() {
@@ -14,14 +17,52 @@ export class InvoiceService {
   }
 
   async getInvoice(nr) {
-    const value = await this.invoiceRepository
-      .createQueryBuilder('invoice')
-      .where('invoice.nr = :nr', { nr: nr })
-      .getOne();
+    const value = await this.invoiceRepository.findOne({
+      where: {
+        nr,
+      },
+    });
     if (!value) {
-      throw new Error(`No invoice was found with number ${nr}`); //add some i18n later aligator
+      throw new Error(invoice_not_found_error_message(nr));
       // check how to improve graphql error response and code
     }
     return value;
+  }
+
+  async create(
+    invoice: Partial<Invoice>,
+    customer: number,
+    projects: number[],
+  ) {
+    const createdInvoice = await this.invoiceRepository
+      .createQueryBuilder()
+      .insert()
+      .values({
+        ...invoice,
+        customer: {
+          id: customer,
+        },
+      })
+      .returning('*')
+      .execute();
+
+    await this.invoiceRepository
+      .createQueryBuilder()
+      .relation(Invoice, 'projects')
+      .of(createdInvoice.raw[0].nr)
+      .add(projects);
+
+    return createdInvoice.raw[0]; // TODO: make it also return projects
+  }
+
+  // TODO: add also update
+
+  async seed() {
+    await this.invoiceRepository
+      .createQueryBuilder()
+      .insert()
+      .into(Invoice)
+      .values(INVOICES_DATA)
+      .execute();
   }
 }

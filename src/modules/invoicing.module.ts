@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { InvoiceModule } from './apis/invoice/invoice.module';
-import { DateScalar } from 'src/shared/scalars/date-scalar.class';
+import { DateScalar } from '../shared/scalars/date-scalar.class';
 
 @Module({
   imports: [

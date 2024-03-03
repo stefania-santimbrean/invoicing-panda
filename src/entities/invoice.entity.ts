@@ -14,14 +14,20 @@ export class Invoice {
   currency: string;
 
   @Column()
-  amount: string;
+  amount: number;
 
   @Column()
   date: Date;
 
-  @ManyToOne(() => Customer, (customer) => customer.invoices, { eager: true })
+  @ManyToOne(() => Customer, (customer) => customer.invoices, {
+    eager: true,
+    nullable: false,
+  })
   customer: Customer;
 
-  @ManyToMany(() => Project, (project) => project.invoices, { eager: true })
+  @ManyToMany(() => Project, (project) => project.invoices, {
+    eager: true,
+    nullable: false,
+  })
   projects: Project[];
 }
