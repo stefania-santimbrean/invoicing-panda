@@ -52,8 +52,10 @@ export class InvoiceService {
       .of(createdInvoice.raw[0].nr)
       .add(projects);
 
-    return createdInvoice.raw[0];
+    return createdInvoice.raw[0]; // TODO: make it also return projects
   }
+
+  // TODO: add also update
 
   async seed() {
     await this.invoiceRepository
