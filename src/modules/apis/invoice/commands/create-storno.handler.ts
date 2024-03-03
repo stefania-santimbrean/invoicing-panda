@@ -5,7 +5,8 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { InvoiceModel } from '../../../../models/invoice.model';
 import { Status, StatusValue } from '../../../../shared/types/shared.types';
-
+export const invoice_for_storno_not_found = (nr) =>
+  `Cannot create storno for unexisting invoice with nr ${nr}`;
 @CommandHandler(CreateStornoCommand)
 export class CreateStornoHandler
   implements ICommandHandler<CreateStornoCommand>
@@ -22,7 +23,7 @@ export class CreateStornoHandler
     if (!inv) {
       return {
         status: StatusValue.failed,
-        message: `Cannot create storno for unexisting invoice with nr ${command.invoiceNr}`,
+        message: invoice_for_storno_not_found(command.invoiceNr),
       };
     }
     const storno = await this.invoiceRepository

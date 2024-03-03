@@ -2,11 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Invoice } from '../../../entities/invoice.entity';
 import { Repository } from 'typeorm';
-import {
-  CUSTOMER_DATA,
-  INVOICES_DATA,
-  PROJECT_DATA,
-} from '../../../../db/mock-data/seed-data';
+import { INVOICES_DATA } from '../../../../db/mock-data/seed-data';
 import { CustomerService } from '../customer/customer.service';
 export const invoice_not_found_error_message = (nr) =>
   `No invoice was found with number ${nr}`; // ideally this would be coming from an i18n file
