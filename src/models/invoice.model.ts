@@ -8,7 +8,7 @@ export class InvoiceModel extends AggregateRoot {
     this.autoCommit = true;
   }
 
-  sendEmail(nr: number) {
-    this.apply(new MarkedAsPaidEvent(nr));
+  sendEmail(nr: number, paid: boolean) {
+    this.apply(new MarkedAsPaidEvent(nr, paid));
   }
 }

@@ -34,7 +34,7 @@ export abstract class IMutation {
 
     abstract update(nr?: Nullable<number>, isStorno?: Nullable<boolean>, currency?: Nullable<string>, date?: Nullable<Date>, amount?: Nullable<number>, customer?: Nullable<number>, projects?: Nullable<number>): Nullable<Invoice> | Promise<Nullable<Invoice>>;
 
-    abstract markAsPaid(nr?: Nullable<number>): Nullable<boolean> | Promise<Nullable<boolean>>;
+    abstract markAsPaid(nr?: Nullable<number>, paid?: Nullable<boolean>): Nullable<boolean> | Promise<Nullable<boolean>>;
 }
 
 export class Project {

@@ -42,8 +42,8 @@ export class InvoiceResolver {
   }
 
   @Mutation()
-  async markAsPaid(@Args('nr') nr: number) {
-    this.commandBus.execute(new MarkAsPaidCommand(nr));
-    return true;
+  async markAsPaid(@Args('nr') nr: number, @Args('paid') paid: boolean = true) {
+    this.commandBus.execute(new MarkAsPaidCommand(nr, paid));
+    return paid;
   }
 }

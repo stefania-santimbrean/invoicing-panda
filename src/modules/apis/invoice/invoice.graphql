@@ -35,5 +35,5 @@ type Mutation {
     projects: Int
   ): Invoice
 
-  markAsPaid(nr: Int): Boolean
+  markAsPaid(nr: Int, paid: Boolean): Boolean
 }

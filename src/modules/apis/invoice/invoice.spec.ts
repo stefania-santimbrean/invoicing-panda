@@ -155,4 +155,44 @@ describe('Invoice Integration Tests', () => {
       },
     });
   });
+
+  it('mark an invoice as being paid', async () => {
+    const mutation = `
+      mutation {
+        markAsPaid (nr: ${FIRST_INVOICE_NR}) 
+      }
+    `;
+
+    const response = await request(app.getHttpServer())
+      .post('/graphql')
+      .set('content-type', 'application/json')
+      .send({ query: mutation })
+      .expect(200);
+
+    expect(response.body).toEqual({
+      data: {
+        markAsPaid: true,
+      },
+    });
+  });
+
+  it('mark an invoice as being unpaid', async () => {
+    const mutation = `
+      mutation {
+        markAsPaid (nr: ${FIRST_INVOICE_NR}, paid: false) 
+      }
+    `;
+
+    const response = await request(app.getHttpServer())
+      .post('/graphql')
+      .set('content-type', 'application/json')
+      .send({ query: mutation })
+      .expect(200);
+
+    expect(response.body).toEqual({
+      data: {
+        markAsPaid: false,
+      },
+    });
+  });
 });

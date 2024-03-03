@@ -16,13 +16,13 @@ export class MarkAsPaidHandler implements ICommandHandler<MarkAsPaidCommand> {
     const updated = await this.invoiceRepository
       .createQueryBuilder()
       .update(Invoice)
-      .set({ paid: true })
+      .set({ paid: command.paid })
       .where({ nr: command.invoiceNr })
       .returning('*')
       .execute();
     const invoice = this.publisher.mergeObjectContext(
       new InvoiceModel(updated.raw[0]),
     );
-    invoice.sendEmail(command.invoiceNr);
+    invoice.sendEmail(command.invoiceNr, command.paid);
   }
 }
