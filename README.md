@@ -1,5 +1,8 @@
 # invoicing-panda
 
+<img src="invoicing-panda.jpg" width="50%" height="50%">
+<a href="https://www.freepik.com/free-vector/cute-panda-hacker-operating-laptop-cartoon-vector-icon-illustration-animal-technology-icon-isolated_35563619.htm#query=panda&position=26&from_view=keyword&track=sph&uuid=54617f49-91c9-4d1b-9f48-3fa12d981f9a">Image by catalyststuff on Freepik</a>
+
 ## Description
 
 API that allows for invoices to be managed in a backend system
