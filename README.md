@@ -51,6 +51,8 @@ yarn start:dev
 docker compose -f ./docker/postgresql.yml down
 ```
 
+After `yarn start:dev` you can open http://localhost:3000/graphql and call queries or mutations.
+
 ## To run tests
 
 ```
