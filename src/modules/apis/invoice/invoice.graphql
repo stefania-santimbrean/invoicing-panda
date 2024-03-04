@@ -19,7 +19,6 @@ type Query {
 
 type Mutation {
   create(
-    isStorno: Boolean
     currency: String
     amount: Int
     date: Date
@@ -29,12 +28,11 @@ type Mutation {
 
   update(
     nr: Int
-    isStorno: Boolean
     currency: String
     amount: Int
     date: Date
     customer: Int
-    projects: Int
+    projects: [Int]
   ): Invoice
 
   markAsPaid(nr: Int, paid: Boolean): Boolean

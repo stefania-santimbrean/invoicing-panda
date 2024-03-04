@@ -123,7 +123,6 @@ describe('Invoice Integration Tests', () => {
   it('create an invoice in the system', async () => {
     const customers = await customerService.getCustomers();
     const TO_CREATE = {
-      isStorno: false,
       currency: 'ron',
       date: Date.now(),
       amount: 300,
@@ -133,7 +132,7 @@ describe('Invoice Integration Tests', () => {
 
     const mutation = `
       mutation {
-        create (isStorno: ${TO_CREATE.isStorno}, currency: "${TO_CREATE.currency}", date: ${TO_CREATE.date}, amount: ${TO_CREATE.amount}, customer: ${TO_CREATE.customer}, projects: [${TO_CREATE.projects}]) {
+        create (currency: "${TO_CREATE.currency}", date: ${TO_CREATE.date}, amount: ${TO_CREATE.amount}, customer: ${TO_CREATE.customer}, projects: [${TO_CREATE.projects}]) {
           nr
           isStorno
           currency
@@ -152,9 +151,38 @@ describe('Invoice Integration Tests', () => {
       data: {
         create: {
           nr: FIRST_INVOICE_NR + 3, // because i know i inserted 3 invoices with seed service
-          isStorno: TO_CREATE.isStorno,
+          isStorno: false,
           currency: TO_CREATE.currency,
           amount: TO_CREATE.amount,
+        },
+      },
+    });
+  });
+
+  it('update an invoice in the system', async () => {
+    const amount = 10000;
+    const mutation = `
+      mutation {
+        update (nr: ${FIRST_INVOICE_NR}, amount: ${amount}) {
+          nr
+          isStorno
+          amount
+        }
+      }
+    `;
+
+    const response = await request(app.getHttpServer())
+      .post('/graphql')
+      .set('content-type', 'application/json')
+      .send({ query: mutation })
+      .expect(200);
+
+    expect(response.body).toEqual({
+      data: {
+        update: {
+          nr: FIRST_INVOICE_NR,
+          isStorno: false,
+          amount: amount,
         },
       },
     });
