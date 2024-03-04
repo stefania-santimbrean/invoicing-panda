@@ -7,6 +7,7 @@ API that allows for invoices to be managed in a backend system
 ## Preprequisites (installed once)
 
 **For Mac/Linux:**
+
 ```
 brew install docker
 ```
@@ -59,6 +60,8 @@ yarn seed:db
 yarn test
 docker compose -f ./docker/postgresql.yml down
 ```
+
+Or simply run `yarn test:script`
 
 \*creation of data for tests could be integrated in before of tests and cleanup in after, but for simplicity we can create db and delete it after test run
 
