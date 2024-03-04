@@ -4,6 +4,7 @@ import { CommandBus } from '@nestjs/cqrs';
 import { MarkAsPaidCommand } from './commands/mark-as-paid.command';
 import { CreateStornoCommand } from './commands/create-storno.command';
 import { StatusValue } from '../../../shared/types/shared.types';
+import { UpdateInvoiceCommand } from './commands/update-invoice.command';
 
 @Resolver('Invoice')
 export class InvoiceResolver {
@@ -24,16 +25,14 @@ export class InvoiceResolver {
 
   @Mutation()
   async create(
-    @Args('isStorno') isStorno: boolean,
     @Args('currency') currency: string,
-    @Args('date') date: Date,
     @Args('amount') amount: number,
+    @Args('date') date: Date,
     @Args('customer') customer: number,
     @Args('projects') projects: number[],
   ) {
     return this.invoiceService.create(
       {
-        isStorno,
         currency,
         date,
         amount,
@@ -41,6 +40,25 @@ export class InvoiceResolver {
       customer,
       projects,
     );
+  }
+
+  @Mutation()
+  async update(
+    @Args('nr') nr: number,
+    @Args('currency') currency: string,
+    @Args('amount') amount: number,
+    @Args('date') date: Date,
+    @Args('customer') customer: number,
+    @Args('projects') projects: number[],
+  ) {
+    const result = await this.commandBus.execute(
+      new UpdateInvoiceCommand(nr, currency, amount, date, customer, projects),
+    );
+    if (result.status && result.status === StatusValue.failed) {
+      throw new Error(result.message);
+    } else {
+      return result;
+    }
   }
 
   @Mutation()

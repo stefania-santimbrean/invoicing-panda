@@ -159,6 +159,35 @@ describe('Invoice Integration Tests', () => {
     });
   });
 
+  it('update an invoice in the system', async () => {
+    const amount = 10000;
+    const mutation = `
+      mutation {
+        update (nr: ${FIRST_INVOICE_NR}, amount: ${amount}) {
+          nr
+          isStorno
+          amount
+        }
+      }
+    `;
+
+    const response = await request(app.getHttpServer())
+      .post('/graphql')
+      .set('content-type', 'application/json')
+      .send({ query: mutation })
+      .expect(200);
+
+    expect(response.body).toEqual({
+      data: {
+        update: {
+          nr: FIRST_INVOICE_NR,
+          isStorno: false,
+          amount: amount,
+        },
+      },
+    });
+  });
+
   it('mark an invoice as being paid', async () => {
     const mutation = `
       mutation {

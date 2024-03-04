@@ -3,7 +3,6 @@ import { CreateStornoCommand } from './create-storno.command';
 import { Invoice } from '../../../../entities/invoice.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { InvoiceModel } from '../../../../models/invoice.model';
 import { Status, StatusValue } from '../../../../shared/types/shared.types';
 export const invoice_for_storno_not_found = (nr) =>
   `Cannot create storno for unexisting invoice with nr ${nr}`;
@@ -62,9 +61,6 @@ export class CreateStornoHandler
       .of(storno.raw[0].nr)
       .add(inv.projects);
 
-    const invoice = this.publisher.mergeObjectContext(
-      new InvoiceModel(storno.raw[0]),
-    );
     // send storno invoice in rabbitmq to be read by some accounting systems like SAP stuff
     return {
       status: StatusValue.success,

@@ -32,7 +32,7 @@ type Mutation {
     amount: Int
     date: Date
     customer: Int
-    projects: Int
+    projects: [Int]
   ): Invoice
 
   markAsPaid(nr: Int, paid: Boolean): Boolean
